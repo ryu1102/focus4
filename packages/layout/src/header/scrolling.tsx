@@ -1,8 +1,7 @@
+import {motion} from "framer-motion";
 import * as React from "react";
-import posed from "react-pose";
-import {PoseElementProps} from "react-pose/lib/components/PoseElement/types";
 
-import {ScrollableContext, springPose, useTheme} from "@focus4/styling";
+import {ScrollableContext, springTransition, useTheme} from "@focus4/styling";
 
 import headerStyles from "./__style__/header.css";
 export {headerStyles};
@@ -29,13 +28,21 @@ export function HeaderScrolling({canDeploy, children, theme: pTheme}: HeaderScro
     const theme = useTheme("header", headerStyles, pTheme);
     const ref = React.useRef<HTMLElement>(null);
 
-    React.useLayoutEffect(() => context.registerHeader(canDeploy ? Header : FixedHeader, ref.current!, canDeploy), [
-        canDeploy
-    ]);
+    React.useLayoutEffect(() => context.registerHeader(motion.div, ref.current!, canDeploy), [canDeploy]);
 
-    React.useLayoutEffect(() => context.setHeaderProps({className: `${theme.scrolling} ${theme.sticky}`, children}), [
-        children
-    ]);
+    React.useLayoutEffect(
+        () =>
+            context.setHeaderProps({
+                className: `${theme.scrolling} ${theme.sticky}`,
+                children,
+                initial: "hidden",
+                animate: "visible",
+                exit: "hidden",
+                transition: springTransition,
+                variants: {visible: {y: "0%"}, hidden: {y: "-105%"}}
+            }),
+        [children]
+    );
 
     return (
         <header className={`${theme.scrolling} ${canDeploy ? theme.deployed : theme.undeployed}`} ref={ref}>
@@ -43,21 +50,3 @@ export function HeaderScrolling({canDeploy, children, theme: pTheme}: HeaderScro
         </header>
     );
 }
-
-const Header = posed.header({
-    enter: {
-        y: "0%",
-        ...springPose
-    },
-    exit: {
-        y: "-105%",
-        ...springPose
-    }
-});
-
-const FixedHeader = React.forwardRef<HTMLHeadingElement, PoseElementProps>(
-    ({onPoseComplete, initialPose, popFromFlow, ...props}, ref) => {
-        React.useLayoutEffect(() => onPoseComplete && onPoseComplete("exit"));
-        return <header ref={ref} {...props} />;
-    }
-);

@@ -1,9 +1,9 @@
+import {AnimatePresence, motion} from "framer-motion";
 import {action, observable} from "mobx";
 import {useObserver} from "mobx-react-lite";
 import * as React from "react";
-import posed, {Transition} from "react-pose";
 
-import {defaultPose, useTheme} from "@focus4/styling";
+import {defaultTransition, useTheme} from "@focus4/styling";
 import {Button, ButtonProps, IconButton, IconButtonTheme} from "@focus4/toolbox";
 
 import {MenuContext} from "./context";
@@ -67,9 +67,27 @@ export function MainMenuItem({label, icon, onClick, route, children, theme: pThe
                 )}
             </li>
             {context.renderSubMenu(
-                <Transition>
+                <AnimatePresence>
                     {state.hasSubMenu && (
-                        <PosedDiv key="panel" ref={panel} className={theme.panel} style={state}>
+                        <motion.div
+                            ref={panel}
+                            className={theme.panel}
+                            style={state}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            transition={defaultTransition}
+                            variants={{
+                                visible: {
+                                    width: "auto",
+                                    opacity: 1
+                                },
+                                hidden: {
+                                    width: 0,
+                                    opacity: 0.7
+                                }
+                            }}
+                        >
                             <MainMenuList
                                 activeRoute={context.activeRoute}
                                 closePanel={() => (state.hasSubMenu = false)}
@@ -77,23 +95,10 @@ export function MainMenuItem({label, icon, onClick, route, children, theme: pThe
                             >
                                 {children}
                             </MainMenuList>
-                        </PosedDiv>
+                        </motion.div>
                     )}
-                </Transition>
+                </AnimatePresence>
             )}
         </>
     ));
 }
-
-const PosedDiv = posed.div({
-    enter: {
-        width: "auto",
-        opacity: 1,
-        ...defaultPose
-    },
-    exit: {
-        width: 0,
-        opacity: 0.7,
-        ...defaultPose
-    }
-});

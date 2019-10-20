@@ -41,6 +41,7 @@ const config = {
     },
     external: [
         ...Object.keys(pkg.dependencies || {}),
+        "framer-motion",
         "i18next",
         "lodash",
         "mobx",
@@ -50,7 +51,6 @@ const config = {
         "popmotion",
         "react",
         "react-dom",
-        "react-pose",
         "stylefire",
         "tslib"
     ],

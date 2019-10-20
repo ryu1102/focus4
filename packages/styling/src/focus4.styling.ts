@@ -5,11 +5,11 @@ export {
     ScrollableContext,
     ScrollspyContext,
     cssTransitionProps,
-    defaultPose,
+    defaultTransition,
     delay,
     duration,
     ease,
     getIcon,
-    springPose
+    springTransition
 } from "./utils";
 export {ThemeConsumer, ThemeConsumerProps, ThemeContext, themr, useTheme} from "./theme";

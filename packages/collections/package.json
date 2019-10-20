@@ -22,7 +22,6 @@
         "@focus4/styling": "^10.1.0",
         "@focus4/toolbox": "^10.1.0",
         "react-dnd": "9.4.0",
-        "react-dnd-html5-backend": "9.4.0",
-        "react-pose": "4.0.9"
+        "react-dnd-html5-backend": "9.4.0"
     }
 }

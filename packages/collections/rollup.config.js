@@ -38,6 +38,7 @@ const config = {
     },
     external: [
         ...Object.keys(pkg.dependencies || {}),
+        "framer-motion",
         "i18next",
         "lodash",
         "mobx",
