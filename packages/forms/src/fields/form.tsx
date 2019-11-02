@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import {useTheme} from "@focus4/styling";
+import {CSSToStrings, useTheme} from "@focus4/styling";
 
-import formStyles from "./__style__/form.css";
+import formStyles, {FormCss} from "./__style__/form.css";
 export {formStyles};
-export type FormStyle = Partial<typeof formStyles>;
+export type FormStyle = CSSToStrings<FormCss>;
 
 /** Options additionnelles du Form. */
 export interface FormProps {
