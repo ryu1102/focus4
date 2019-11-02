@@ -29,7 +29,7 @@ export function Form(props: FormProps) {
         <FormContext.Provider value={props.formContext}>
             {props.noForm ? (
                 <form
-                    className={theme.form}
+                    className={theme.form()}
                     noValidate={true}
                     onSubmit={e => {
                         e.preventDefault();

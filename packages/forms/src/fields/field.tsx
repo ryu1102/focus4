@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import i18next from "i18next";
 import {action, computed, observable} from "mobx";
 import * as React from "react";
@@ -5,7 +6,7 @@ import {findDOMNode} from "react-dom";
 
 import {themeable} from "@focus4/core";
 import {BaseInputProps, EntityField, FieldComponents, FieldEntry, FieldType, FormEntityField} from "@focus4/stores";
-import {CSSToStrings, themr} from "@focus4/styling";
+import {CSSToStrings, themr, ToBem} from "@focus4/styling";
 
 import {Autocomplete, Display, Input, Label, Select} from "../components";
 import {documentHelper} from "./document-helper";
@@ -106,7 +107,7 @@ export class Field<F extends FieldEntry> extends React.Component<
     }
 
     /** Affiche le composant d'entrée utilisateur (`InputComponent`). */
-    input(theme: FieldStyle) {
+    input(theme: ToBem<FieldCss>) {
         const {
             field,
             inputType = "input",
@@ -146,7 +147,7 @@ export class Field<F extends FieldEntry> extends React.Component<
                     {...domainSCP}
                     {...selectProps}
                     {...props}
-                    theme={themeable({error: theme.error!}, domainSCP.theme || {}, selectProps.theme || {})}
+                    theme={themeable({error: theme.error()}, domainSCP.theme || {}, selectProps.theme || {})}
                 />
             );
         } else if (inputType === "autocomplete") {
@@ -155,7 +156,7 @@ export class Field<F extends FieldEntry> extends React.Component<
                     {...domainACP}
                     {...autocompleteProps}
                     {...props}
-                    theme={themeable({error: theme.error!}, domainACP.theme || {}, autocompleteProps.theme || {})}
+                    theme={themeable({error: theme.error()}, domainACP.theme || {}, autocompleteProps.theme || {})}
                 />
             );
         } else {
@@ -164,7 +165,7 @@ export class Field<F extends FieldEntry> extends React.Component<
                     {...domainICP}
                     {...inputProps}
                     {...props}
-                    theme={themeable({error: theme.error!}, domainICP.theme || {}, inputProps.theme || {})}
+                    theme={themeable({error: theme.error()}, domainICP.theme || {}, inputProps.theme || {})}
                 />
             );
         }
@@ -197,9 +198,14 @@ export class Field<F extends FieldEntry> extends React.Component<
 
                     return (
                         <div
-                            className={`${theme.field} ${isEdit ? theme.edit : ""} ${
-                                isEdit && error && this.showError ? theme.invalid : ""
-                            } ${isRequired ? theme.required : ""} ${className}`}
+                            className={classNames(
+                                theme.field({
+                                    edit: isEdit,
+                                    error: !!(isEdit && error && this.showError),
+                                    required: isRequired
+                                }),
+                                className
+                            )}
                         >
                             {hasLabel ? (
                                 <LabelComponent
@@ -211,7 +217,7 @@ export class Field<F extends FieldEntry> extends React.Component<
                                     name={name}
                                     style={!disableInlineSizing ? {width: `${labelRatio}%`} : {}}
                                     theme={themeable(
-                                        {label: theme.label},
+                                        {label: theme.label()},
                                         domainLCP.theme || {},
                                         labelProps.theme || {}
                                     )}
@@ -219,7 +225,7 @@ export class Field<F extends FieldEntry> extends React.Component<
                             ) : null}
                             <div
                                 style={!disableInlineSizing ? {width: `${valueRatio}%`} : {}}
-                                className={`${theme.value} ${className}`}
+                                className={classNames(theme.value(), className)}
                             >
                                 {isEdit ? this.input(theme) : this.display()}
                             </div>

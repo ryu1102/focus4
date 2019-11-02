@@ -43,11 +43,11 @@ export function Label({
     return (
         <Theme theme={pTheme}>
             {theme => (
-                <div className={theme.label} style={style}>
+                <div className={theme.label()} style={style}>
                     <label htmlFor={name}>{(label && i18next.t(label)) || ""}</label>
                     {comment && showTooltip ? (
                         <TooltipIcon
-                            className={`${theme.icon} ${!!onTooltipClick ? theme.clickable : ""}`}
+                            className={theme.icon({clickable: !!onTooltipClick})}
                             tooltipHideOnClick={!onTooltipClick}
                             onClick={onTooltipClick}
                             tooltip={typeof comment === "string" ? i18next.t(comment) : comment}

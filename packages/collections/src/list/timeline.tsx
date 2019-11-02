@@ -51,7 +51,7 @@ export class Timeline<T> extends ListBase<T, TimelineProps<T>> {
         return (
             <Theme theme={this.props.theme}>
                 {theme => (
-                    <ul className={theme.timeline}>
+                    <ul className={theme.timeline()}>
                         {this.renderLines()}
                         {this.renderBottomRow(theme)}
                     </ul>
