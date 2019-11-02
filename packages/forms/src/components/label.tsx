@@ -1,14 +1,13 @@
 import i18next from "i18next";
 import * as React from "react";
 
-import {CSSToStrings, getIcon, themr} from "@focus4/styling";
+import {CSSProp, getIcon, themr} from "@focus4/styling";
 import {FontIcon, tooltipFactory} from "@focus4/toolbox";
 const TooltipIcon = tooltipFactory()(FontIcon);
 
-import labelStyles, {LabelCss} from "./__style__/label.css";
-export {labelStyles};
-export type LabelStyle = CSSToStrings<LabelCss>;
-const Theme = themr("label", labelStyles);
+import labelCss, {LabelCss} from "./__style__/label.css";
+export {labelCss, LabelCss};
+const Theme = themr("label", labelCss);
 
 /** Props du Label. */
 export interface LabelProps {
@@ -27,7 +26,7 @@ export interface LabelProps {
     /** Style inline. */
     style?: React.CSSProperties;
     /** CSS. */
-    theme?: LabelStyle;
+    theme?: CSSProp<LabelCss>;
 }
 
 export function Label({

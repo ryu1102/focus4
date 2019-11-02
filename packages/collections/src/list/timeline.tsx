@@ -5,10 +5,9 @@ import {EntityField, FieldEntry} from "@focus4/stores";
 import {themr} from "@focus4/styling";
 
 import {LineProps, LineWrapper} from "./line";
-import {ListBase, ListBaseProps} from "./list-base";
+import {ListBase, ListBaseProps, listCss} from "./list-base";
 
-import listStyles from "./__style__/list.css";
-const Theme = themr("list", listStyles);
+const Theme = themr("list", listCss);
 
 /** Props du composant de TimeLine. */
 export interface TimelineProps<T> extends ListBaseProps<T> {

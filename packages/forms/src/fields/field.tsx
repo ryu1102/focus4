@@ -6,16 +6,15 @@ import {findDOMNode} from "react-dom";
 
 import {themeable} from "@focus4/core";
 import {BaseInputProps, EntityField, FieldComponents, FieldEntry, FieldType, FormEntityField} from "@focus4/stores";
-import {CSSToStrings, themr, ToBem} from "@focus4/styling";
+import {CSSProp, themr, ToBem} from "@focus4/styling";
 
 import {Autocomplete, Display, Input, Label, Select} from "../components";
 import {documentHelper} from "./document-helper";
 import {FormContext} from "./form";
 
-import fieldStyles, {FieldCss} from "./__style__/field.css";
-export {fieldStyles};
-export type FieldStyle = CSSToStrings<FieldCss>;
-const Theme = themr("field", fieldStyles);
+import fieldCss, {FieldCss} from "./__style__/field.css";
+export {fieldCss, FieldCss};
+const Theme = themr("field", fieldCss);
 
 /** Options pour un champ défini à partir de `fieldFor` et consorts. */
 export interface FieldOptions<F extends FieldEntry> {
@@ -37,7 +36,7 @@ export interface FieldOptions<F extends FieldEntry> {
     /** Handler de modification de la valeur. */
     onChange?: (value: FieldType<F["fieldType"]> | undefined) => void;
     /** CSS. */
-    theme?: FieldStyle;
+    theme?: CSSProp<FieldCss>;
     /** Largeur en % de la valeur. Par défaut : 100 - `labelRatio`. */
     valueRatio?: number;
 }

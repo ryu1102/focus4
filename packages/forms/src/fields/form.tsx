@@ -1,10 +1,9 @@
 import * as React from "react";
 
-import {CSSToStrings, useTheme} from "@focus4/styling";
+import {CSSProp, useTheme} from "@focus4/styling";
 
-import formStyles, {FormCss} from "./__style__/form.css";
-export {formStyles};
-export type FormStyle = CSSToStrings<FormCss>;
+import formCss, {FormCss} from "./__style__/form.css";
+export {formCss, FormCss};
 
 /** Options additionnelles du Form. */
 export interface FormProps {
@@ -17,14 +16,14 @@ export interface FormProps {
     /** Voir `FormActions` */
     save: () => void;
     /** CSS. */
-    theme?: FormStyle;
+    theme?: CSSProp<FormCss>;
 }
 
 export const FormContext = React.createContext({forceErrorDisplay: false});
 
 /** Composant de formulaire */
 export function Form(props: FormProps) {
-    const theme = useTheme("form", formStyles, props.theme);
+    const theme = useTheme("form", formCss, props.theme);
     return (
         <FormContext.Provider value={props.formContext}>
             {props.noForm ? (
